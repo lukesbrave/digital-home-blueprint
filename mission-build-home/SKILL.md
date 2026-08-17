@@ -49,12 +49,20 @@ and we'll pick it right up." Update PROGRESS.md first.
    - What's your business called, and what do you sell?
    - Do you already have a live website or a page that collects leads?
      (Remember this answer. It decides the path in Phase 2.)
-   Store all of it in memory. You should never need to ask twice.
+   Write all of it to your platform's PERSISTENT memory the moment the
+   interview ends — Hermes memory, Buzz core memory (buzz mem), or your
+   platform's equivalent — not merely this conversation's context. The
+   test: a brand new session tomorrow must already know these answers.
+   You should never need to ask twice.
 4. Confirm the mission back in your own words: what you're going to build,
    what it will cost (their existing accounts, free tiers, roughly the
    price of two coffees a month in API usage), and what they'll have at
    the end.
-5. Create `PROGRESS.md`. Mark Phase 0 complete.
+5. Create `PROGRESS.md`. Add one standing rule to the same persistent
+   memory: "Mission state lives in PROGRESS.md. Read it before acting
+   in any new conversation." Phase 0 is not complete until the
+   interview facts AND that rule are in persistent memory; then mark
+   Phase 0 complete.
 
 **Proof-post:** ask your human to post your mission summary in the
 community with the words "My employee knows the plan."
