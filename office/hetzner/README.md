@@ -16,13 +16,21 @@ You will never open a terminal. There are four steps.
 ## 2. Prepare the building form (1 minute)
 
 Open [cloud-init.yaml](./cloud-init.yaml) and copy all of it. Replace the
-three CHANGE-ME values:
+three placeholders — swap the ENTIRE placeholder text, so only your value
+remains:
 
-| Value | What it is |
+| Placeholder | Replace it with |
 |---|---|
-| `__BOT_TOKEN__` | from BotFather (step 1) |
-| `__TELEGRAM_USER_ID__` | from userinfobot — locks the employee to YOU |
-| `__SETUP_PASSWORD__` | a password you choose for the one-time setup page |
+| `PASTE-YOUR-BOT-TOKEN-HERE` | the token from BotFather (step 1) |
+| `PASTE-YOUR-USER-ID-HERE` | your number from userinfobot — locks the employee to YOU |
+| `CHOOSE-A-PASSWORD-HERE` | a password you invent for the one-time setup page |
+
+Before and after, so there's no doubt:
+
+```
+before:  TELEGRAM_BOT_TOKEN=PASTE-YOUR-BOT-TOKEN-HERE
+after:   TELEGRAM_BOT_TOKEN=8123456789:AAHrX9wkQfEXAMPLEtoken
+```
 
 ## 3. Rent the office (Hetzner, 5 minutes)
 

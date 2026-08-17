@@ -3,13 +3,17 @@
 # Digital Home Blueprint — the office (Hetzner sovereign edition)
 #
 # Paste this whole file into the "Cloud config" box when creating your
-# Hetzner server (Ubuntu 24.04). Replace the THREE values marked
-# CHANGE-ME below. Nothing else needs editing.
+# Hetzner server (Ubuntu 24.04). Replace the THREE placeholders marked
+# CHANGE-ME below. Swap the ENTIRE placeholder, including the
+# PASTE- part — only your value remains. Example:
 #
-#   1. __BOT_TOKEN__        from @BotFather in Telegram
-#   2. __TELEGRAM_USER_ID__ your numeric ID from @userinfobot
-#   3. __SETUP_PASSWORD__   a password you choose for the one-time
-#                           setup page (username is: setup)
+#   before:  TELEGRAM_BOT_TOKEN=PASTE-YOUR-BOT-TOKEN-HERE
+#   after:   TELEGRAM_BOT_TOKEN=8123456789:AAHrX9wkQfEXAMPLEtoken
+#
+#   1. PASTE-YOUR-BOT-TOKEN-HERE   from @BotFather in Telegram
+#   2. PASTE-YOUR-USER-ID-HERE     your numeric ID from @userinfobot
+#   3. CHOOSE-A-PASSWORD-HERE      a password you invent for the
+#                                  one-time setup page (username: setup)
 #
 # What this does on first boot:
 #   - installs Hermes Agent (official installer, no interactive steps)
@@ -32,8 +36,8 @@ write_files:
   - path: /root/.hermes/.env
     permissions: "0600"
     content: |
-      TELEGRAM_BOT_TOKEN=__BOT_TOKEN__            # CHANGE-ME (1)
-      TELEGRAM_ALLOWED_USERS=__TELEGRAM_USER_ID__ # CHANGE-ME (2)
+      TELEGRAM_BOT_TOKEN=PASTE-YOUR-BOT-TOKEN-HERE
+      TELEGRAM_ALLOWED_USERS=PASTE-YOUR-USER-ID-HERE
 
   - path: /etc/systemd/system/hermes-gateway.service
     permissions: "0644"
@@ -89,7 +93,7 @@ write_files:
 
       [Service]
       Type=simple
-      ExecStart=/usr/bin/ttyd -p 7681 -W -c setup:__SETUP_PASSWORD__ /usr/local/bin/hermes-hatch
+      ExecStart=/usr/bin/ttyd -p 7681 -W -c setup:CHOOSE-A-PASSWORD-HERE /usr/local/bin/hermes-hatch
       Restart=no
 
       [Install]
