@@ -100,6 +100,16 @@ for something you can set for them in one exchange.
 
 ## Phase 4 — Deploy the backend
 
+You deploy. Not your human. The Cloudflare API token and account ID
+from Phase 1 give you everything wrangler needs to run non-interactively
+(set CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID in the
+environment). Pick the Worker and project names yourself (brand-backend
+style, confirm in one line), and treat Worker URLs and project names as
+OUTPUTS of your deploy, never as questions for your human. If you catch
+yourself asking your human for a URL that does not exist yet, you have
+the direction of the work backwards: stop, deploy, then report the URL
+as proof.
+
 Follow the repo's `DEPLOYMENT.md` exactly. In summary:
 
 1. Configure `wrangler.jsonc`: their Worker name, matching
