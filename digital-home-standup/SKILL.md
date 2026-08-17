@@ -84,7 +84,14 @@ and the backend's migrations build on it:
 
 Their backend has no public signup, by design. Guide your human through
 Supabase Dashboard → Authentication → Users → Add User (their email, a
-strong password, **Auto-confirm user** checked). This login is theirs, not
+strong password, **Auto-confirm user** checked). Warn them the dropdown
+offers two actions: they want **Create new user**, NOT Send invitation
+(an invitation makes no usable login until accepted, and your user check
+will show zero users). Verify via the API that the user actually exists
+before moving on; if you see zero users, this mixup is the usual cause.
+They will not see any admin option in that dialog; that is correct.
+Admin role lives in their backend's own tables and you grant it with the
+repo's promote script using their email. This login is theirs, not
 yours: you never need their password.
 
 ## Phase 4 — Deploy the backend
