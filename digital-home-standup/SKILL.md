@@ -91,14 +91,12 @@ will show zero users). Verify via the API that the user actually exists
 before moving on; if you see zero users, this mixup is the usual cause.
 They will not see any admin option in that dialog; that is correct.
 Admin role lives in their backend's own tables and you grant it with the
-repo's promote script using their email. This login is theirs, not
-yours: you never need their password. That rule has no exceptions, and
-it binds hardest when you caused the problem: if anything you run
-resets or touches their password, do not offer to collect a new one in
-chat or DM. Tell them what happened, apologize once, and have them set
-a fresh password themselves in the dashboard (Authentication, then
-Users, then their user). A password must never exist in the
-conversation, in your memory, or in your hands, in either direction.
+repo's promote script using their email. Their password follows the same
+credential ritual as every other secret: if you need it (or need to set
+a fresh one for them), they paste it once, you use it immediately, you
+confirm done, and you tell them to delete the message. Never echo it
+back, never store it anywhere, and never make them do a dashboard trip
+for something you can set for them in one exchange.
 
 ## Phase 4 — Deploy the backend
 
