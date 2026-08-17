@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Office builder — Digital Home Blueprint</title>
+<title>Server setup — Digital Home Blueprint</title>
 <style>
   :root { color-scheme: light dark; }
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -26,42 +26,49 @@
 </style>
 </head>
 <body>
-<h1>Office builder</h1>
-<p>This fills in your employee's building form. Nothing you type leaves
-this page — it runs entirely in your browser.</p>
+<h1>Create your server setup file</h1>
+<p>This page makes the setup file for your AI agent's server. Fill in the
+three fields, copy the result, and paste it into Hetzner when you create
+your server. The file installs your agent, connects it to your Telegram
+bot, and locks it so only you can talk to it.</p>
+<p>Everything happens in your browser. Nothing you type is sent
+anywhere.</p>
 
 <label for="token">Bot token</label>
-<p class="hint">In Telegram: message <b>@BotFather</b>, send /newbot, name
-your employee. Copy the token it gives you.</p>
+<p class="hint">In Telegram: message <b>@BotFather</b>, send /newbot, and
+give your bot a name. Copy the token it gives you.</p>
 <input id="token" autocomplete="off" spellcheck="false"
        placeholder="8123456789:AAHrX9wkQf...">
 <div class="err" id="token-err"></div>
 
 <label for="userid">Your Telegram user ID</label>
 <p class="hint">In Telegram: message <b>@userinfobot</b>, copy the number
-it replies with. This locks your employee to you alone.</p>
+it replies with. Only this account will be able to talk to your bot.</p>
 <input id="userid" autocomplete="off" spellcheck="false"
        placeholder="123456789">
 <div class="err" id="userid-err"></div>
 
-<label for="pw">Setup page password</label>
-<p class="hint">Invent a password. You'll use it exactly once, on the
-one-time setup page. Letters and numbers only.</p>
+<label for="pw">Setup password</label>
+<p class="hint">Make up a password. You'll use it once, to finish setup
+in your browser after the server starts. Letters, numbers, dashes.</p>
 <input id="pw" autocomplete="off" spellcheck="false"
        placeholder="something-you-choose">
 <div class="err" id="pw-err"></div>
 
-<button id="copy" disabled>Copy my building form</button>
+<button id="copy" disabled>Copy setup file</button>
 <div class="done" id="done"></div>
 
-<h2>Then</h2>
+<h2>What to do with it</h2>
 <ol>
-  <li>hetzner.com → Cloud → create a server</li>
-  <li>Image: <b>Ubuntu 24.04</b> · Type: the ~€7 shared tier</li>
-  <li>Expand <b>Cloud config</b> and paste what you just copied</li>
-  <li>Create. In ~5 minutes, open
-      <b>http://YOUR-SERVER-IP:7681</b> to connect the brain
-      (username: <b>setup</b>, password: the one above)</li>
+  <li>Go to hetzner.com → Cloud → Create server</li>
+  <li>Pick image <b>Ubuntu 24.04</b> and the ~€7 shared plan</li>
+  <li>Open the <b>Cloud config</b> section and paste your setup file</li>
+  <li>Click Create, then wait about 5 minutes while everything installs</li>
+  <li>Open <b>http://YOUR-SERVER-IP:7681</b> in your browser and log in —
+      username <b>setup</b>, password: the one you made above. A short
+      wizard connects your ChatGPT account. That page closes itself
+      when it's done.</li>
+  <li>Open Telegram, press <b>Start</b> on your bot, and say hello</li>
 </ol>
 
 <script>
