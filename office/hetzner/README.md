@@ -15,22 +15,22 @@ You will never open a terminal. There are four steps.
 
 ## 2. Prepare the building form (1 minute)
 
-Open [cloud-init.yaml](./cloud-init.yaml) and copy all of it. Replace the
-three placeholders — swap the ENTIRE placeholder text, so only your value
-remains:
+Use the **[office builder](https://lukesbrave.github.io/digital-home-blueprint/)**:
+three boxes (bot token, your user ID, a password you invent), one Copy
+button. Nothing you type leaves your browser.
 
-| Placeholder | Replace it with |
-|---|---|
-| `PASTE-YOUR-BOT-TOKEN-HERE` | the token from BotFather (step 1) |
-| `PASTE-YOUR-USER-ID-HERE` | your number from userinfobot — locks the employee to YOU |
-| `CHOOSE-A-PASSWORD-HERE` | a password you invent for the one-time setup page |
+<details>
+<summary>Prefer to edit by hand?</summary>
 
-Before and after, so there's no doubt:
+Open [cloud-init.yaml](./cloud-init.yaml), copy all of it, and swap each
+placeholder for your value — the ENTIRE placeholder, so only your value
+remains after the `=`:
 
 ```
 before:  TELEGRAM_BOT_TOKEN=PASTE-YOUR-BOT-TOKEN-HERE
 after:   TELEGRAM_BOT_TOKEN=8123456789:AAHrX9wkQfEXAMPLEtoken
 ```
+</details>
 
 ## 3. Rent the office (Hetzner, 5 minutes)
 

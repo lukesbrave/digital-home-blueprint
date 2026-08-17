@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Office builder — Digital Home Blueprint</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+         max-width: 640px; margin: 40px auto; padding: 0 20px; line-height: 1.6; }
+  h1 { font-size: 1.5rem; } h2 { font-size: 1.1rem; margin-top: 2rem; }
+  label { display: block; font-weight: 600; margin-top: 1.2rem; }
+  .hint { font-size: .85rem; opacity: .75; margin: .15rem 0 .4rem; }
+  input { width: 100%; padding: .6rem .7rem; font-size: 1rem; border: 1px solid #999;
+          border-radius: 8px; box-sizing: border-box; font-family: ui-monospace, monospace; }
+  input.ok { border-color: #2e9e6b; } input.bad { border-color: #d05c4a; }
+  .err { color: #d05c4a; font-size: .85rem; min-height: 1.2rem; margin-top: .2rem; }
+  button { margin-top: 1.5rem; width: 100%; padding: .9rem; font-size: 1.05rem;
+           font-weight: 600; border: none; border-radius: 10px; cursor: pointer;
+           background: #1a1a1a; color: #fff; }
+  @media (prefers-color-scheme: dark) { button { background: #f2f2f2; color: #111; } }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  .done { text-align: center; margin-top: .8rem; font-weight: 600; color: #2e9e6b;
+          min-height: 1.4rem; }
+  ol { padding-left: 1.2rem; } li { margin: .4rem 0; }
+</style>
+</head>
+<body>
+<h1>Office builder</h1>
+<p>This fills in your employee's building form. Nothing you type leaves
+this page — it runs entirely in your browser.</p>
+
+<label for="token">Bot token</label>
+<p class="hint">In Telegram: message <b>@BotFather</b>, send /newbot, name
+your employee. Copy the token it gives you.</p>
+<input id="token" autocomplete="off" spellcheck="false"
+       placeholder="8123456789:AAHrX9wkQf...">
+<div class="err" id="token-err"></div>
+
+<label for="userid">Your Telegram user ID</label>
+<p class="hint">In Telegram: message <b>@userinfobot</b>, copy the number
+it replies with. This locks your employee to you alone.</p>
+<input id="userid" autocomplete="off" spellcheck="false"
+       placeholder="123456789">
+<div class="err" id="userid-err"></div>
+
+<label for="pw">Setup page password</label>
+<p class="hint">Invent a password. You'll use it exactly once, on the
+one-time setup page. Letters and numbers only.</p>
+<input id="pw" autocomplete="off" spellcheck="false"
+       placeholder="something-you-choose">
+<div class="err" id="pw-err"></div>
+
+<button id="copy" disabled>Copy my building form</button>
+<div class="done" id="done"></div>
+
+<h2>Then</h2>
+<ol>
+  <li>hetzner.com → Cloud → create a server</li>
+  <li>Image: <b>Ubuntu 24.04</b> · Type: the ~€7 shared tier</li>
+  <li>Expand <b>Cloud config</b> and paste what you just copied</li>
+  <li>Create. In ~5 minutes, open
+      <b>http://YOUR-SERVER-IP:7681</b> to connect the brain
+      (username: <b>setup</b>, password: the one above)</li>
+</ol>
+
+<script>
+const RAW = "https://raw.githubusercontent.com/lukesbrave/digital-home-blueprint/main/office/hetzner/cloud-init.yaml";
+let template = null;
+fetch(RAW).then(r => r.text()).then(t => { template = t; check(); })
+  .catch(() => { document.getElementById("done").textContent =
+    "Could not load the template — check your connection and refresh."; });
+
+const f = {
+  token:  { re: /^\d{6,12}:[A-Za-z0-9_-]{30,60}$/, msg: "That doesn't look like a bot token. It has numbers, then a colon, then a long code." },
+  userid: { re: /^\d{5,15}$/, msg: "Your user ID is a number only, like 123456789." },
+  pw:     { re: /^[A-Za-z0-9_-]{8,64}$/, msg: "Use 8 or more characters: letters, numbers, dashes. No spaces or symbols." }
+};
+const el = id => document.getElementById(id);
+function check() {
+  let allOk = true;
+  for (const id in f) {
+    const v = el(id).value.trim();
+    const ok = f[id].re.test(v);
+    el(id).className = v ? (ok ? "ok" : "bad") : "";
+    el(id + "-err").textContent = (v && !ok) ? f[id].msg : "";
+    if (!ok) allOk = false;
+  }
+  el("copy").disabled = !(allOk && template);
+}
+for (const id in f) el(id).addEventListener("input", check);
+
+el("copy").addEventListener("click", async () => {
+  const lines = template.split("\n");
+  let i = 1;
+  while (i < lines.length && lines[i].startsWith("#")) i++;
+  const body = [lines[0], ...lines.slice(i)].join("\n");
+  const out = body
+    .replaceAll("PASTE-YOUR-BOT-TOKEN-HERE", el("token").value.trim())
+    .replaceAll("PASTE-YOUR-USER-ID-HERE", el("userid").value.trim())
+    .replaceAll("CHOOSE-A-PASSWORD-HERE", el("pw").value.trim());
+  await navigator.clipboard.writeText(out);
+  el("done").textContent = "Copied. Now paste it into Hetzner's Cloud config box.";
+});
+</script>
+</body>
+</html>
