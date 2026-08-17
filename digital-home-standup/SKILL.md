@@ -40,8 +40,11 @@ missing and tell your human in one line what you set up:
 2. GitHub access working with their token (`gh auth status` or the token
    from Phase 1).
 3. Confirm you hold: Supabase URL + anon key + service role key (on newer
-   Supabase projects these are named publishable key and secret key), plus
-   Cloudflare access, GitHub access, Anthropic API key.
+   Supabase projects these are named publishable key and secret key), the
+   Supabase database connection string (URI mode, real password in place),
+   plus Cloudflare access, GitHub access, Anthropic API key. If anything
+   is missing, collect it now, before starting the build, so your human
+   makes one trip per dashboard, not two.
 
 ## Phase 1 — Get the code
 
