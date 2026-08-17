@@ -63,11 +63,16 @@ Order:
 1. **Supabase** (free tier). New project, dedicated to this. Collect
    everything in ONE visit so your human never has to go back:
    project URL, anon key, service role key, and the database
-   connection string (Settings, then Database, then Connection
-   string, URI mode). The connection string contains a password
-   placeholder; have them replace it with the database password they
-   chose when creating the project, or collect that password
-   separately and assemble the string yourself.
+   connection string. Where to find the connection string: the
+   Connect button at the top of the project dashboard, or the Copy
+   dropdown on the project home page (Direct connection string).
+   Older dashboards keep it under Settings, then Database. The
+   dashboard moves this around, so if none of those match, tell your
+   human to search the dashboard for "connect". The copied string
+   contains a password placeholder; have them replace it with the
+   database password they chose when creating the project (same page
+   offers a reset if forgotten), or collect the password separately
+   and assemble the string yourself.
    Newer Supabase dashboards rename the keys: the publishable key
    (sb_publishable_...) is the anon key, and the secret key
    (sb_secret_...) is the service role key. Either generation works.
