@@ -1,0 +1,105 @@
+#cloud-config
+# ============================================================================
+# Digital Home Blueprint — the office (Hetzner sovereign edition)
+#
+# Paste this whole file into the "Cloud config" box when creating your
+# Hetzner server (Ubuntu 24.04). Replace the THREE values marked
+# CHANGE-ME below. Nothing else needs editing.
+#
+#   1. __BOT_TOKEN__        from @BotFather in Telegram
+#   2. __TELEGRAM_USER_ID__ your numeric ID from @userinfobot
+#   3. __SETUP_PASSWORD__   a password you choose for the one-time
+#                           setup page (username is: setup)
+#
+# What this does on first boot:
+#   - installs Hermes Agent (official installer, no interactive steps)
+#   - connects it to YOUR Telegram bot, locked to YOUR user ID only
+#   - opens a one-time password-protected setup page on port 7681
+#     where you connect your ChatGPT subscription in the browser
+#   - the setup page seals itself permanently once you finish
+#
+# After ~5 minutes: open  http://YOUR-SERVER-IP:7681  and log in.
+# ============================================================================
+
+package_update: true
+packages:
+  - curl
+  - git
+  - ufw
+  - ttyd
+
+write_files:
+  - path: /root/.hermes/.env
+    permissions: "0600"
+    content: |
+      TELEGRAM_BOT_TOKEN=__BOT_TOKEN__            # CHANGE-ME (1)
+      TELEGRAM_ALLOWED_USERS=__TELEGRAM_USER_ID__ # CHANGE-ME (2)
+
+  - path: /etc/systemd/system/hermes-gateway.service
+    permissions: "0644"
+    content: |
+      [Unit]
+      Description=Hermes Agent gateway (your employee)
+      After=network-online.target
+      Wants=network-online.target
+
+      [Service]
+      Type=simple
+      Environment=HERMES_HOME=/root/.hermes
+      ExecStart=/usr/local/bin/hermes gateway
+      Restart=always
+      RestartSec=5
+
+      [Install]
+      WantedBy=multi-user.target
+
+  - path: /usr/local/bin/hermes-hatch
+    permissions: "0755"
+    content: |
+      #!/bin/bash
+      export HERMES_HOME=/root/.hermes
+      echo ""
+      echo "=============================================="
+      echo "  Welcome. Let's connect your employee's brain."
+      echo ""
+      echo "  Pick your provider on the next screen"
+      echo "  (OpenAI Codex = your ChatGPT subscription)."
+      echo "  It will show you a link: open it, sign in,"
+      echo "  and paste the code back here."
+      echo "=============================================="
+      echo ""
+      /usr/local/bin/hermes model
+      echo ""
+      echo "Restarting your employee with its new brain..."
+      systemctl restart hermes-gateway
+      echo ""
+      echo "Done. Open Telegram, press Start on your bot,"
+      echo "and say hello."
+      echo ""
+      echo "This setup page now seals itself. Goodbye!"
+      sleep 5
+      systemctl disable --now hermes-hatch
+
+  - path: /etc/systemd/system/hermes-hatch.service
+    permissions: "0644"
+    content: |
+      [Unit]
+      Description=One-time browser setup page for Hermes
+      After=network-online.target
+
+      [Service]
+      Type=simple
+      ExecStart=/usr/bin/ttyd -p 7681 -W -c setup:__SETUP_PASSWORD__ /usr/local/bin/hermes-hatch
+      Restart=no
+
+      [Install]
+      WantedBy=multi-user.target
+
+runcmd:
+  - export HERMES_HOME=/root/.hermes && curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash -s -- --skip-setup
+  - ufw allow 22/tcp
+  - ufw allow 7681/tcp
+  - ufw --force enable
+  - systemctl daemon-reload
+  - systemctl enable --now hermes-gateway
+  - systemctl enable --now hermes-hatch
