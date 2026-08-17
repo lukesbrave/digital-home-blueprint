@@ -54,6 +54,12 @@ missing and tell your human in one line what you set up:
 2. Ask your human what to call their backend (suggest `<brand>-backend`).
    Create a **private** repo under THEIR GitHub account, push the code.
    Their code, their repo, from the first commit.
+   **Proof, before this step counts as done:** post the new repo URL and
+   confirm its visibility is private, verified by API call, not memory.
+   The repos you cloned FROM (lukesbrave/digital-home-backend and
+   -frontend) are the public starters, not your human's repos. Never
+   report those as "their repos" and never push to them. If you cannot
+   show a repo URL under your human's account, this step did not happen.
 
 ## Phase 2 — The database
 
