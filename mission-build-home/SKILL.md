@@ -21,6 +21,16 @@ with what's done, what's next, and any credentials' storage status (never
 the credentials themselves). Your human may disappear for days. The mission
 must survive that.
 
+If your platform has persistent agent memory (Hermes memory, Buzz
+engrams/core, or similar), use both layers: store the interview facts
+and standing decisions there so every fresh session starts knowing the
+business, and store one pointer that says mission state lives in
+PROGRESS.md, read it before acting. Memory is for who your human is;
+PROGRESS.md is the single source of truth for where the work stands.
+Never keep two competing status lists; if memory and PROGRESS.md ever
+disagree about mission state, PROGRESS.md wins and memory gets
+corrected.
+
 If you hit a usage limit mid-phase, tell your human plainly: "I've hit my
 thinking limit for now. We're saved at [step]. Message me in a few hours
 and we'll pick it right up." Update PROGRESS.md first.
