@@ -61,7 +61,11 @@ verified.
 Order:
 
 1. **Supabase** (free tier). New project, dedicated to this. Collect:
-   project URL, anon key, service role key.
+   project URL, anon key, service role key. Newer Supabase dashboards
+   rename these: the publishable key (sb_publishable_...) is the anon
+   key, and the secret key (sb_secret_...) is the service role key.
+   Either generation works. If your human cannot find a key, ask which
+   names their dashboard shows and translate for them.
 2. **Cloudflare** (free tier). The backend will deploy as a Worker.
    Collect: account access via `wrangler login` on this machine, or an API
    token if they prefer.

@@ -39,8 +39,9 @@ missing and tell your human in one line what you set up:
 1. `node --version` — need 22+. `git --version`. `npx wrangler --version`.
 2. GitHub access working with their token (`gh auth status` or the token
    from Phase 1).
-3. Confirm you hold: Supabase URL + anon key + service role key, Cloudflare
-   access, GitHub access, Anthropic API key.
+3. Confirm you hold: Supabase URL + anon key + service role key (on newer
+   Supabase projects these are named publishable key and secret key), plus
+   Cloudflare access, GitHub access, Anthropic API key.
 
 ## Phase 1 — Get the code
 
