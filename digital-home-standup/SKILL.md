@@ -39,9 +39,9 @@ missing and tell your human in one line what you set up:
 1. `node --version` — need 22+. `git --version`. `npx wrangler --version`.
 2. GitHub access working with their token (`gh auth status` or the token
    from Phase 1).
-3. Confirm you hold: Supabase URL + anon key + service role key (on newer
-   Supabase projects these are named publishable key and secret key), the
-   Supabase database connection string (URI mode, real password in place),
+3. Confirm you hold: the Supabase personal access token (with it you can
+   create the project and fetch the URL and API keys yourself via the
+   Management API; do not ask your human for keys or connection strings),
    plus Cloudflare access, GitHub access, Anthropic API key. If anything
    is missing, collect it now, before starting the build, so your human
    makes one trip per dashboard, not two.
@@ -66,10 +66,15 @@ and the backend's migrations build on it:
    gets deployed.
 2. Apply frontend migrations 001 → 011, in order.
 3. Apply every file in the backend repo's `supabase/migrations/`, in order.
-4. Apply them yourself if you can connect (Supabase CLI or psql with their
-   database password); otherwise guide your human through pasting each file
-   into the Supabase SQL Editor, one at a time, confirming success before
-   the next.
+4. Apply them yourself via the Management API SQL query endpoint
+   (POST /v1/projects/{ref}/database/query with the personal access
+   token), one migration per call, in order, checking each response
+   for errors before the next. Fallbacks if the API path fails:
+   Supabase CLI or psql with the session pooler connection string
+   (never the direct string; it needs IPv6 and times out on most home
+   networks), and as a last resort guide your human through pasting
+   each file into the Supabase SQL Editor, one at a time, confirming
+   success before the next.
 5. Create the `images` storage bucket (hero images need it).
 6. **Proof:** list the tables that now exist. Tell your human what their
    database can now remember: visitors, content, offers, leads, emails,

@@ -60,29 +60,22 @@ verified.
 
 Order:
 
-1. **Supabase** (free tier). New project, dedicated to this. Collect
-   everything in ONE visit so your human never has to go back:
-   project URL, anon key, service role key, and the database
-   connection string. Where to find it: the Connect button at the top
-   of the project dashboard. Older dashboards keep it under Settings,
-   then Database. The dashboard moves this around, so if neither
-   matches, tell your human to search the dashboard for "connect".
-   IMPORTANT: choose the SESSION POOLER string, not the direct
-   connection string. The direct string needs IPv6 and fails on most
-   home and office networks with a timeout that looks like a firewall
-   problem. If a connection times out, you are probably holding the
-   direct string; go back for the session pooler one. Never escalate
-   to a personal access token or the Management API for this; those
-   are account-wide keys and the pooler string is all you need. The copied string
-   contains a password placeholder; have them replace it with the
-   database password they chose when creating the project (same page
-   offers a reset if forgotten), or collect the password separately
-   and assemble the string yourself.
-   Newer Supabase dashboards rename the keys: the publishable key
-   (sb_publishable_...) is the anon key, and the secret key
-   (sb_secret_...) is the service role key. Either generation works.
-   If your human cannot find a key, ask which names their dashboard
-   shows and translate for them.
+1. **Supabase** (free tier). One credential, one paste: a personal
+   access token. Have your human sign up at supabase.com with an
+   account dedicated to this business (the token grants full account
+   access, so it should not share an account with unrelated
+   production projects). Then: supabase.com/dashboard/account/tokens,
+   Generate new token, name it after you, paste it in chat. That is
+   their whole Supabase visit. They never touch the dashboard again.
+   You do the rest through the Management API with that token:
+   create the project (region near them, generate a strong database
+   password yourself and store it), wait for provisioning, fetch the
+   project URL and both API keys (anon, also called publishable, and
+   service role, also called secret), and run migrations later
+   through the API's SQL query endpoint. Never ask your human for
+   connection strings, database passwords, or dashboard keys. Every
+   one of those is a wall you can spare them with the token you
+   already hold.
 2. **Cloudflare** (free tier). The backend will deploy as a Worker.
    Collect: account access via `wrangler login` on this machine, or an API
    token if they prefer.
