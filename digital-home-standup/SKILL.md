@@ -52,14 +52,15 @@ missing and tell your human in one line what you set up:
    `https://api.github.com/repos/lukesbrave/digital-home-backend/releases/latest`
    Clone at that tag. Record the version.
 2. Ask your human what to call their backend (suggest `<brand>-backend`).
-   Create a **private** repo under THEIR GitHub account, push the code.
-   Their code, their repo, from the first commit.
-   **Proof, before this step counts as done:** post the new repo URL and
-   confirm its visibility is private, verified by API call, not memory.
-   The repos you cloned FROM (lukesbrave/digital-home-backend and
-   -frontend) are the public starters, not your human's repos. Never
-   report those as "their repos" and never push to them. If you cannot
-   show a repo URL under your human's account, this step did not happen.
+   Create a **private** repo under THEIR GitHub account, push the code,
+   and drop the repo link in chat so they always know where their code
+   lives. Their code, their repo, from the first commit.
+   Remote wiring that prevents accidents later: `origin` points at
+   their private repo; keep the starter you cloned from as a second
+   remote named `starter` (UPGRADE.md expects that name for upgrades).
+   Never push to the starter and never list it as their repo. Keep
+   tokens out of remote URLs; use a credential helper or environment
+   variable instead.
 
 ## Phase 2 — The database
 
